@@ -1,0 +1,35 @@
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  profiles: dev
+  data:
+    mongodb:
+      uri: mongodb://test:test@localhost:27017/seoblog
+#      host: localhost
+#      port: 27017
+#      password: test
+#      username: test
+#      database: local
+---
+spring:
+  profiles: nonprod
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: local
+---
+spring:
+  profiles: prod
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: local
+---
+spring:
+  profiles: test
+
+
