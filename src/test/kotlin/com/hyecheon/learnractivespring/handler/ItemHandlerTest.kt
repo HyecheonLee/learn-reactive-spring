@@ -90,4 +90,21 @@ internal class ItemHandlerTest {
 				.expectNextCount(4)
 				.verifyComplete()
 	}
+
+	@Test
+	internal fun getOneItem() {
+		webTestClient.get().uri("${ItemConstants.ITEM_FUNCTIONAL_END_POINT_V1}/{id}", "ABC")
+				.exchange()
+				.expectStatus().isOk
+				.expectBody()
+				.jsonPath("$.price", "149.99")
+	}
+
+	@Test
+	internal fun getOneItemNotFound() {
+		webTestClient.get().uri("${ItemConstants.ITEM_FUNCTIONAL_END_POINT_V1}/{id}", "DEF")
+				.exchange()
+				.expectStatus().isNotFound
+
+	}
 }

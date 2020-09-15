@@ -26,6 +26,10 @@ class RouterFunctionConfig {
 			GET(ItemConstants.ITEM_FUNCTIONAL_END_POINT_V1) { it ->
 				itemHandler.getAllItems(it)
 			}
+			GET("${ItemConstants.ITEM_FUNCTIONAL_END_POINT_V1}/{id}") {
+				itemHandler.getOneItem(it)
+			}
 		}
 	}
+
 }
