@@ -1,6 +1,6 @@
 package com.hyecheon.learnractivespring.router
 
-import com.hyecheon.learnractivespring.constants.*
+import com.hyecheon.learnractivespring.constants.ItemConstants.Companion.ITEM_FUNCTIONAL_END_POINT_V1
 import com.hyecheon.learnractivespring.handler.*
 import org.springframework.context.annotation.*
 import org.springframework.http.*
@@ -23,11 +23,20 @@ class RouterFunctionConfig {
 	@Bean
 	fun itemRoute(itemHandler: ItemHandler) = router {
 		accept(MediaType.APPLICATION_JSON).nest {
-			GET(ItemConstants.ITEM_FUNCTIONAL_END_POINT_V1) { it ->
+			GET(ITEM_FUNCTIONAL_END_POINT_V1) { it ->
 				itemHandler.getAllItems(it)
 			}
-			GET("${ItemConstants.ITEM_FUNCTIONAL_END_POINT_V1}/{id}") {
+			GET("$ITEM_FUNCTIONAL_END_POINT_V1/{id}") {
 				itemHandler.getOneItem(it)
+			}
+			POST(ITEM_FUNCTIONAL_END_POINT_V1) {
+				itemHandler.createItem(it)
+			}
+			DELETE("$ITEM_FUNCTIONAL_END_POINT_V1/{id}") {
+				itemHandler.deleteItem(it)
+			}
+			PUT("$ITEM_FUNCTIONAL_END_POINT_V1/{id}") {
+				itemHandler.updateItem(it)
 			}
 		}
 	}
