@@ -6,11 +6,18 @@ import com.hyecheon.learnractivespring.repository.*
 import org.slf4j.*
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
+import reactor.core.publisher.*
 
 @RestController
 class ItemController(
 		val itemReactiveRepository: ItemReactiveRepository) {
 	private val log: Logger = LoggerFactory.getLogger(ItemController::class.java)
+
+	@ExceptionHandler(RuntimeException::class)
+	fun handleRuntimeException(e: RuntimeException): ResponseEntity<String> {
+		log.error("Exception caught in handleRuntimeException : $e")
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
+	}
 
 	@GetMapping(value = [ITEM_END_POINT_V1])
 	fun getAllItems() = run {
@@ -37,6 +44,11 @@ class ItemController(
 		itemReactiveRepository.deleteById(id)
 	}
 
+	@GetMapping("${ITEM_END_POINT_V1}/runtimeException")
+	fun runtimeException(): Flux<Item> {
+		return itemReactiveRepository.findAll().concatWith(Mono.error(RuntimeException("RuntimeException Occurred.")))
+	}
+
 	@PutMapping("$ITEM_END_POINT_V1/{id}")
 	fun updateItem(@PathVariable id: String, @RequestBody item: Item) = run {
 		itemReactiveRepository.findById(id).flatMap { currentItem ->
@@ -46,4 +58,5 @@ class ItemController(
 			ResponseEntity(updateItem, HttpStatus.OK)
 		}.defaultIfEmpty(ResponseEntity(HttpStatus.NOT_FOUND))
 	}
+
 }
