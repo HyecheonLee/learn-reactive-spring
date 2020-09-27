@@ -13,11 +13,11 @@ class ItemController(
 		val itemReactiveRepository: ItemReactiveRepository) {
 	private val log: Logger = LoggerFactory.getLogger(ItemController::class.java)
 
-	@ExceptionHandler(RuntimeException::class)
+	/*@ExceptionHandler(RuntimeException::class)
 	fun handleRuntimeException(e: RuntimeException): ResponseEntity<String> {
 		log.error("Exception caught in handleRuntimeException : $e")
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.message)
-	}
+	}*/
 
 	@GetMapping(value = [ITEM_END_POINT_V1])
 	fun getAllItems() = run {
