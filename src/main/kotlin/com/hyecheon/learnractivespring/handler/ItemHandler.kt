@@ -66,6 +66,10 @@ class ItemHandler(
 		}
 	}
 
+	fun itemEx(serverRequest: ServerRequest): Mono<ServerResponse> {
+		throw RuntimeException("RuntimeException Occurred")
+	}
+
 	companion object {
 		val notFound = ServerResponse.notFound().build()
 	}

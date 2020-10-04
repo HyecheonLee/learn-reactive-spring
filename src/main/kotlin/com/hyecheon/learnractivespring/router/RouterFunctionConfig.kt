@@ -41,4 +41,12 @@ class RouterFunctionConfig {
 		}
 	}
 
+	@Bean
+	fun errorRoute(itemHandler: ItemHandler) = router {
+		accept(MediaType.APPLICATION_JSON).nest {
+			GET("/fun/runtimeexception") {
+				itemHandler.itemEx(it)
+			}
+		}
+	}
 }
